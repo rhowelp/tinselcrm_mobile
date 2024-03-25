@@ -171,11 +171,13 @@ class _HomePageViewState extends State<HomePageView> {
                       },
                     )
                   : GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _urlFocusNode.requestFocus();
-                          isUrlUpdating = true;
-                        });
+                      onLongPress: () {
+                        if (kDebugMode) {
+                          setState(() {
+                            _urlFocusNode.requestFocus();
+                            isUrlUpdating = true;
+                          });
+                        }
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
