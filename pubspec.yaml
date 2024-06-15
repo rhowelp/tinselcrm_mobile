@@ -10,6 +10,10 @@ dependencies:
   animate_do: ^3.3.4
   bloc: ^8.1.1
   equatable: ^2.0.5
+  firebase_core: ^2.27.1
+  firebase_analytics: ^10.8.10
+  firebase_messaging: ^14.7.20
+  firebase_crashlytics: ^3.4.19
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2

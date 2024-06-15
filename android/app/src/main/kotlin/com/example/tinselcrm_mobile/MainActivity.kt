@@ -1,4 +1,4 @@
-package com.example.tinselcrm_mobile
+package com.tinselcrm.app
 
 import io.flutter.embedding.android.FlutterActivity
 
