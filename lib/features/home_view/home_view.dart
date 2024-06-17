@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -87,6 +88,37 @@ class _HomePageViewState extends State<HomePageView> {
     });
   }
 
+  Future<void> onMessageOpenedApp(RemoteMessage message) async {
+    handleNotificationTap(message);
+  }
+
+  Future<void> readFirebaseInitialLink() async {
+    final message = await FirebaseMessaging.instance.getInitialMessage();
+    print("readFirebaseInitialLink ${message!.data}");
+    // if (message != null) {
+    //   // handleNotificationTap(message);
+    // }
+  }
+
+  Future<void> readFirebaseNotification() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print("readFirebaseNotification ${message.data}");
+      localNotification.showNotification(
+        title: message.notification?.title ?? '',
+        body: message.notification?.body ?? '',
+        payload: '',
+      );
+    });
+  }
+
+  void handleNotificationTap(RemoteMessage message) async {
+    if (message.notification != null) {
+      if ((message.notification?.body ?? '').toLowerCase().contains('')) {
+        //routes to the page
+      }
+    }
+  }
+
   @override
   initState() {
     super.initState();
@@ -94,6 +126,12 @@ class _HomePageViewState extends State<HomePageView> {
     _isAndroidPermissionGranted();
     _requestPermissions();
     localNotification.initializeNotifications();
+    FirebaseMessaging.onMessageOpenedApp.listen(onMessageOpenedApp);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      readFirebaseNotification();
+      readFirebaseInitialLink();
+    });
   }
 
   final webStorageManager = WebStorageManager.instance();

@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:tinselcrm_mobile/features/home_view/home_view.dart';
 
@@ -23,8 +24,12 @@ class _SplashViewState extends State<SplashView> {
         );
       },
     );
-
+    getFCMToken();
     super.initState();
+  }
+
+  void getFCMToken() async {
+    print("FCM ${await FirebaseMessaging.instance.getToken().then((value) => value)}");
   }
 
   @override
