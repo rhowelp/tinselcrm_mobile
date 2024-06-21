@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:tinselcrm_mobile/features/home_view/home_view.dart';
+import 'package:tinselcrm_mobile/features/home_view/home_page.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -19,7 +19,7 @@ class _SplashViewState extends State<SplashView> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute<void>(
-            builder: (context) => const HomePageView(),
+            builder: (context) => const HomePage(),
           ),
         );
       },
