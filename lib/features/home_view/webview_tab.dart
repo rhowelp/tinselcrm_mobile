@@ -151,17 +151,19 @@ class _WebViewTabState extends State<WebViewTab> with WidgetsBindingObserver {
 
   Future<void> getCookiesData(WebUri url) async {
     final cookies = await _cookieManager.getCookies(url: url);
-    final sessionId = cookies.firstWhere((cookie) => cookie.name == 'sessionId').value;
+    if (cookies.isNotEmpty) {
+      final sessionId = cookies.firstWhere((cookie) => cookie.name == 'sessionId').value;
 
-    setState(() {
-      if (sessionId != null && !_isConnected) {
-        // Connect to WebSocket with sessionId token
-        log('=======> Connecting to WebSocket...');
-        connectToWebSocket(sessionId);
-      }
-      _isConnected = true;
-      log('=======> Connected: $_isConnected');
-    });
+      setState(() {
+        if (sessionId != null && !_isConnected) {
+          // Connect to WebSocket with sessionId token
+          log('=======> Connecting to WebSocket...');
+          connectToWebSocket(sessionId);
+        }
+        _isConnected = true;
+        log('=======> Connected: $_isConnected');
+      });
+    }
   }
 
   void _getLocalStorageData(String from) async {
@@ -271,6 +273,7 @@ class _WebViewTabState extends State<WebViewTab> with WidgetsBindingObserver {
                 onWebViewCreated: (controller) async {
                   _webViewController = controller;
                   widget.onTabRefreshRequested(_webViewController!);
+                  setState(() {});
                   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
                     await controller.startSafeBrowsing();
                   }
